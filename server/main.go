@@ -3,8 +3,8 @@ package main
 import (
     "log"
     "net/http"
-    "server/controllers"
-    "github.com/gorilla/mux",
+    "os"
+    "github.com/gorilla/mux"
     "server/handlers"
 )
 
@@ -15,5 +15,11 @@ func main() {
     router.HandleFunc("/students/{id:[0-9]+}", handlers.PutStudentHandler).Methods("PUT")
     router.HandleFunc("/students/{id:[0-9]+}", handlers.DeleteStudentHandler).Methods("DELETE")
 
-    log.Fatal(http.ListenAndServe(":8080", router))
+    port := os.Getenv("GO_DOCKER_PORT")
+    if port == "" {
+        port = "8080"
+    }
+
+    log.Printf("Server starting on port %s...\n", port)
+    log.Fatal(http.ListenAndServe(":"+port, router))
 }
