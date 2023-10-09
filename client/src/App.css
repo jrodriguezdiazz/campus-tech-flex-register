@@ -1,0 +1,55 @@
+/* App.css */
+
+.app-container {
+  align-items: center;
+  background-color: #f4f4f4; /* Color de fondo claro para contraste */
+  display: flex;
+  flex-direction: column;
+  font-family: "Arial", sans-serif; /* Usar una fuente sans-serif moderna */
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.app-header {
+  background-color: #007bff;
+  border-radius: 10px; /* Bordes redondeados */
+  color: white;
+  margin-bottom: 20px; /* Espacio entre el header y el contenido */
+  padding: 10px 0;
+  text-align: center;
+  width: 80%;
+}
+
+.app-title {
+  font-size: 2rem; /* Título más grande */
+  letter-spacing: 1.5px; /* Espaciado entre letras */
+  margin-bottom: 10px;
+}
+
+.app-nav {
+  display: flex;
+  justify-content: center;
+}
+
+.nav-link {
+  border-radius: 20px; /* Bordes redondeados en los links */
+  color: white;
+  font-weight: bold;
+  margin: 0 20px;
+  padding: 5px 15px; /* Padding alrededor del link */
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* Fondo semitransparente al hacer hover */
+  color: #0056b3;
+}
+
+.app-main {
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Sombra más suave */
+  padding: 20px;
+  width: 80%; /* Ancho del contenedor principal */
+}
