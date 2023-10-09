@@ -1,8 +1,12 @@
-CREATE DATABASE IF NOT EXISTS multicontainer;
+CREATE DATABASE utesa_database;
 
-USE multicontainer;
+USE utesa_database;
 
-CREATE TABLE IF NOT EXISTS `values` (
-    `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `value` INT NOT NULL
+CREATE TABLE students (
+    id SERIAL PRIMARY KEY,
+    code VARCHAR(50) UNIQUE NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    birthday DATE NOT NULL,
+    sex VARCHAR(10) NOT NULL
 );
