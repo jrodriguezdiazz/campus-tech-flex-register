@@ -19,7 +19,7 @@ services:
       dockerfile: Dockerfile.dev
       context: ./nginx
     ports:
-      - '3050:80'
+      - $CLIENT_LOCAL_PORT:$CLIENT_DOCKER_PORT
   api:
     build:
       dockerfile: Dockerfile.dev
@@ -27,7 +27,7 @@ services:
     volumes:
       - ./server:/app
     env_file:
-      - .env
+      - ./.env
     depends_on:
       - postgres
     ports:
@@ -46,4 +46,5 @@ services:
       dockerfile: Dockerfile.dev
       context: ./client
     volumes:
+      - /app/node_modules
       - ./client:/app
