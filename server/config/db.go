@@ -8,9 +8,9 @@ import (
 )
 
 func Connect() (*sql.DB, error) {
-    user := os.Getenv("PGDB_USER")
-    password := os.Getenv("PGDB_PASSWORD")
-    dbname := os.Getenv("PGDB_DATABASE")
+    user := os.Getenv("POSTGRES_USER")
+    password := os.Getenv("POSTGRES_PASSWORD")
+    dbname := os.Getenv("POSTGRES_DB")
     sslmode := os.Getenv("SSL_MODE")
 
     connStr := fmt.Sprintf("user=%s dbname=%s sslmode=%s password=%s", user, dbname, sslmode, password)
