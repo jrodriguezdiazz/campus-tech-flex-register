@@ -23,7 +23,7 @@ function StudentList() {
     <div>
       <h2>Student List</h2>
       {loading && <Loading />}
-      {!loading && empty && <p>No hay estudiantes registrados.</p>}
+      {empty && <p>There are no registered students.</p>}
       <div className="students-list">
         {students.map((student) => (
           <div className="student-card" key={student.id}>

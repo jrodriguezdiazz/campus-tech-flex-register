@@ -16,7 +16,6 @@ function AddStudent() {
     e.preventDefault();
     const success = await postStudent(student);
     if(success) {
-      // Reset form or navigate somewhere after successful post
       setStudent({
         code: '',
         name: '',

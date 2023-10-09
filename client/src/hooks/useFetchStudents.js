@@ -19,6 +19,7 @@ function useFetchStudents() {
 
         setLoading(false);
       } catch (error) {
+        setEmpty(true);
         console.error('Error fetching students:', error);
         setLoading(false);
       }
