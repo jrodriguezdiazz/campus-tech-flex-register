@@ -7,11 +7,13 @@ import (
     "server/models"
     "github.com/gorilla/mux"
     "strconv"
+    "log"
 )
 
 func GetStudentsHandler(w http.ResponseWriter, r *http.Request) {
     students, err := controllers.GetAllStudents()
     if err != nil {
+        log.Printf("Error getting students: %v", err)
         http.Error(w, err.Error(), http.StatusInternalServerError)
         return
     }
