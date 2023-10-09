@@ -1,28 +1,30 @@
 import React from 'react';
 import {BrowserRouter as Router, Link, Route, Routes} from 'react-router-dom';
 import './App.css';
-import MainComponent from './components/MainComponent';
-import OtherPage from './components/OtherPage';
+import StudentList from './components/StudentList';
+import AddStudent from './components/AddStudent';
+import EditStudent from './components/EditStudent';
 
 function App() {
   return (
     <Router>
       <div className="app-container">
         <header className="app-header">
-          <h1 className="app-title">Multicontainer Application</h1>
+          <h1 className="app-title">Students System</h1>
           <nav className="app-nav">
             <Link to="/" className="nav-link">
-              Home
+              Students List
             </Link>
-            <Link to="/otherpage" className="nav-link">
-              Other Page
+            <Link to="/add" className="nav-link">
+              Add Student
             </Link>
           </nav>
         </header>
         <main className="app-main">
           <Routes>
-            <Route path="/" element={<MainComponent />} />
-            <Route path="/otherpage" element={<OtherPage />} />
+            <Route path="/" element={<StudentList />} />
+            <Route path="/add" element={<AddStudent />} />
+            <Route path="/edit/:id" element={<EditStudent />} />
           </Routes>
         </main>
       </div>
