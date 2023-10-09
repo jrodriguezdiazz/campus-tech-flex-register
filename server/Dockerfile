@@ -1,7 +1,22 @@
-FROM node:18.12.1-alpine
+# Build Stage
+FROM golang:1.18 AS builder
+
 WORKDIR /app
-COPY ./package.json ./
-RUN npm i
-EXPOSE 5000
+COPY go.mod go.sum ./
+RUN go mod download
 COPY . .
-CMD ["npm", "run", "start"]
+
+# Build the Go app
+RUN CGO_ENABLED=0 GOOS=linux go build -o main .
+
+# Production Stage
+FROM alpine:latest
+
+RUN apk --no-cache add ca-certificates
+
+WORKDIR /root/
+
+# Copy the binary from the builder stage
+COPY --from=builder /app/main .
+
+CMD ["./main"]
