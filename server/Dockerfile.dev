@@ -1,8 +1,12 @@
 FROM golang:1.18
 
-WORKDIR /app
-COPY go.mod go.sum ./
-RUN go mod download
-COPY . .
+ENV PROJECT_DIR=/app \
+    GO111MODULE=on \
+    CGO_ENABLED=0
 
-CMD ["go", "run", "."]
+WORKDIR /app
+RUN mkdir "/build"
+COPY . .
+RUN go get github.com/githubnemo/CompileDaemon
+RUN go install github.com/githubnemo/CompileDaemon
+ENTRYPOINT CompileDaemon -build="go build -o /build/app" -command="/build/app"
