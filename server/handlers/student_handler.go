@@ -71,3 +71,21 @@ func DeleteStudentHandler(w http.ResponseWriter, r *http.Request) {
 
     w.WriteHeader(http.StatusOK)
 }
+
+func GetStudentByIDHandler(w http.ResponseWriter, r *http.Request) {
+    params := mux.Vars(r)
+    id, err := strconv.Atoi(params["id"])
+    if err != nil {
+        http.Error(w, "Invalid student ID", http.StatusBadRequest)
+        return
+    }
+
+    student, err := controllers.GetStudentByID(id)
+    if err != nil {
+        log.Printf("Error getting student: %v", err)
+        http.Error(w, err.Error(), http.StatusInternalServerError)
+        return
+    }
+
+    json.NewEncoder(w).Encode(student)
+}

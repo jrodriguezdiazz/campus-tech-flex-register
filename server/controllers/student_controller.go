@@ -3,6 +3,7 @@ package controllers
 import (
     "server/models"
     "server/config"
+    "database/sql"
 )
 
 func GetAllStudents() ([]models.Student, error) {
@@ -28,6 +29,25 @@ func GetAllStudents() ([]models.Student, error) {
     }
     return students, nil
 }
+
+func GetStudentByID(id int) (*models.Student, error) {
+    db, err := config.Connect()
+    if err != nil {
+        return nil, err
+    }
+    defer db.Close()
+
+    var s models.Student
+    err = db.QueryRow("SELECT id, code, name, last_name, birthday, sex FROM students WHERE id=$1", id).Scan(&s.ID, &s.Code, &s.Name, &s.LastName, &s.Birthday, &s.Sex)
+    if err != nil {
+        if err == sql.ErrNoRows {
+            return nil, nil
+        }
+        return nil, err
+    }
+    return &s, nil
+}
+
 
 func InsertStudent(student models.Student) (int64, error) {
     db, err := config.Connect()

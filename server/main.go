@@ -14,6 +14,7 @@ func main() {
     router.HandleFunc("/students", handlers.PostStudentHandler).Methods("POST")
     router.HandleFunc("/students/{id:[0-9]+}", handlers.PutStudentHandler).Methods("PUT")
     router.HandleFunc("/students/{id:[0-9]+}", handlers.DeleteStudentHandler).Methods("DELETE")
+    router.HandleFunc("/students/{id:[0-9]+}", handlers.GetStudentByIDHandler).Methods("GET")
 
     port := os.Getenv("GO_DOCKER_PORT")
     if port == "" {
