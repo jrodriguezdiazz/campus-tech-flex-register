@@ -1,11 +1,12 @@
-import React, {useState, useEffect} from 'react';
-import {useParams, useHistory} from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {useNavigate, useParams} from 'react-router-dom';
 import useUpdateStudent from '../hooks/useUpdateStudent';
 import './EditStudent.css';
+import Loading from './Loading';
 
 function EditStudent() {
   const {id} = useParams();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [student, setStudent] = useState(null);
   const {updateStudent, error, loading} = useUpdateStudent();
@@ -28,11 +29,11 @@ function EditStudent() {
     e.preventDefault();
     const success = await updateStudent(id, student);
     if (success) {
-      history.push('/');
+      navigate('/');
     }
   };
 
-  if (!student) return <div>Loading...</div>;
+  if (!student) return <Loading />;
 
   return (
     <div className="edit-student">
