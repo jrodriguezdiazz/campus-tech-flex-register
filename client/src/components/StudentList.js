@@ -1,10 +1,10 @@
-import Student from './Student';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Loading from './Loading';
-import useFetchStudents from '../hooks/useFetchStudents';
 import useDeleteStudent from '../hooks/useDeleteStudent';
-import './StudentList.css'; // Importamos los estilos
+import useFetchStudents from '../hooks/useFetchStudents';
+import Loading from './Loading';
+import Student from './Student';
+import './StudentList.css';
 
 function StudentList() {
   const { students, loading, empty } = useFetchStudents();

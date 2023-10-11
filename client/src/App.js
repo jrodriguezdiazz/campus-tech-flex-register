@@ -1,9 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
 import './App.css';
+import StudentForm from './components/StudentForm';
 import StudentList from './components/StudentList';
-import AddStudent from './components/AddStudent';
-import EditStudent from './components/EditStudent';
 
 function App() {
   return (
@@ -23,8 +22,8 @@ function App() {
         <main className="app-main">
           <Routes>
             <Route path="/" element={<StudentList />} />
-            <Route path="/add" element={<AddStudent />} />
-            <Route path="/edit/:id" element={<EditStudent />} />
+            <Route path="/add" element={<StudentForm />} />
+            <Route path="/edit/:id" element={<StudentForm />} />
           </Routes>
         </main>
       </div>

@@ -1,24 +1,36 @@
-import { ErrorMessage, Field, FormikProvider, useFormik } from 'formik';
+import { ErrorMessage, Field, Form, FormikProvider, useFormik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import usePostStudent from '../hooks/usePostStudent';
 import useUpdateStudent from '../hooks/useUpdateStudent';
 import validationSchema from '../validations/student';
-import './EditStudent.css';
 import Loading from './Loading';
+import './StudentForm.css';
 
-function EditStudent() {
+function StudentForm() {
   const { id } = useParams();
   const navigate = useNavigate();
 
   const [student, setStudent] = useState(null);
-  const { updateStudent, error, loading } = useUpdateStudent();
+  const {
+    updateStudent,
+    error: updateError,
+    loading: updateLoading,
+  } = useUpdateStudent();
+  const {
+    postStudent,
+    error: createError,
+    loading: createLoading,
+  } = usePostStudent();
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch(`/api/students/${id}`);
-        const data = await response.json();
-        setStudent(data);
+        if (id) {
+          const response = await fetch(`/api/students/${id}`);
+          const data = await response.json();
+          setStudent(data);
+        }
       } catch (error) {
         console.error('Error fetching student:', error);
       }
@@ -28,6 +40,7 @@ function EditStudent() {
   }, [id]);
 
   const initialValues = {
+    code: student ? student.code : '',
     name: student ? student.name : '',
     last_name: student ? student.last_name : '',
     sex: student ? student.sex : '',
@@ -39,22 +52,36 @@ function EditStudent() {
     initialValues,
     validationSchema,
     onSubmit: async (values, { setSubmitting }) => {
-      const success = await updateStudent(id, values);
-      if (success) {
-        navigate('/');
+      if (id) {
+        const success = await updateStudent(id, values);
+        if (success) {
+          navigate('/');
+        }
+      } else {
+        const success = await postStudent(values);
+        if (success) {
+          navigate('/');
+        }
       }
       setSubmitting(false);
     },
   });
 
-  if (!student) return <Loading />;
+  if (!student && id) return <Loading />;
 
   return (
     <FormikProvider value={formik}>
       <div className="edit-student">
-        <h2>Editar Estudiante</h2>
-        {error && <p className="error">{error.message}</p>}
-        <form onSubmit={formik.handleSubmit}>
+        <h2>{id ? 'Editar Estudiante' : 'Add Student'}</h2>
+        {id
+          ? updateError && <p className="error">{updateError.message}</p>
+          : createError && <p className="error">{createError.message}</p>}
+        <Form onSubmit={formik.handleSubmit}>
+          <div className="input-group">
+            <label>Code:</label>
+            <Field type="text" name="code" disabled={id} />
+            <ErrorMessage name="code" component="div" className="error" />
+          </div>
           <div className="input-group">
             <label>Name:</label>
             <Field type="text" name="name" />
@@ -76,12 +103,12 @@ function EditStudent() {
             <ErrorMessage name="birthday" component="div" className="error" />
           </div>
           <button type="submit" disabled={formik.isSubmitting}>
-            Save Changes
+            {id ? 'Save Changes' : 'Add'}
           </button>
-        </form>
+        </Form>
       </div>
     </FormikProvider>
   );
 }
 
-export default EditStudent;
+export default StudentForm;
