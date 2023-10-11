@@ -1,82 +1,107 @@
-import React, { useState } from 'react';
+import { useFormik } from 'formik';
+import React from 'react';
 import usePostStudent from '../hooks/usePostStudent';
+import validationSchema from '../validations/student';
 import './AddStudent.css';
 
 function AddStudent() {
-  const [student, setStudent] = useState({
-    code: '',
-    name: '',
-    last_name: '',
-    birthday: '',
-    sex: '',
-  });
   const { postStudent, error, loading } = usePostStudent();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const success = await postStudent(student);
-    if(success) {
-      setStudent({
-        code: '',
-        name: '',
-        last_name: '',
-        birthday: '',
-        sex: '',
-      });
-    }
-  };
+  const formik = useFormik({
+    initialValues: {
+      code: '',
+      name: '',
+      last_name: '',
+      birthday: '',
+      sex: '',
+    },
+    validationSchema,
+    onSubmit: async (values, { resetForm }) => {
+      const success = await postStudent(values);
+      if (success) {
+        resetForm();
+      }
+    },
+  });
 
   return (
     <div className="add-student">
       <h2 className="title">Add Student</h2>
       {error && <p className="error">{error.message}</p>}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={formik.handleSubmit}>
         <div className="input-group">
-          <label>Code:</label>
+          <label htmlFor="code">Code:</label>
           <input
-            value={student.code}
-            onChange={(e) =>
-              setStudent((prev) => ({ ...prev, code: e.target.value }))
-            }
+            id="code"
+            name="code"
+            type="text"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.code}
           />
+          {formik.touched.code && formik.errors.code ? (
+            <div className="error">{formik.errors.code}</div>
+          ) : null}
         </div>
         <div className="input-group">
-          <label>Name:</label>
+          <label htmlFor="name">Name:</label>
           <input
-            value={student.name}
-            onChange={(e) =>
-              setStudent((prev) => ({ ...prev, name: e.target.value }))
-            }
+            id="name"
+            name="name"
+            type="text"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.name}
           />
+          {formik.touched.name && formik.errors.name ? (
+            <div className="error">{formik.errors.name}</div>
+          ) : null}
         </div>
         <div className="input-group">
-          <label>Last Name:</label>
+          <label htmlFor="last_name">Last Name:</label>
           <input
-            value={student.last_name}
-            onChange={(e) =>
-              setStudent((prev) => ({ ...prev, last_name: e.target.value }))
-            }
+            id="last_name"
+            name="last_name"
+            type="text"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.last_name}
           />
+          {formik.touched.last_name && formik.errors.last_name ? (
+            <div className="error">{formik.errors.last_name}</div>
+          ) : null}
         </div>
         <div className="input-group">
-          <label>Sex:</label>
+          <label htmlFor="sex">Sex:</label>
           <input
-            value={student.sex}
-            onChange={(e) =>
-              setStudent((prev) => ({ ...prev, sex: e.target.value }))
-            }
+            id="sex"
+            name="sex"
+            type="text"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.sex}
           />
+          {formik.touched.sex && formik.errors.sex ? (
+            <div className="error">{formik.errors.sex}</div>
+          ) : null}
         </div>
         <div className="input-group">
-          <label>Birthday:</label>
+          <label htmlFor="birthday">Birthday:</label>
           <input
-            value={student.birthday}
-            onChange={(e) =>
-              setStudent((prev) => ({ ...prev, birthday: e.target.value }))
-            }
+            id="birthday"
+            name="birthday"
+            type="text"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.birthday}
           />
+          {formik.touched.birthday && formik.errors.birthday ? (
+            <div className="error">{formik.errors.birthday}</div>
+          ) : null}
         </div>
-        <button type='submit' disabled={loading}>Add</button>
+        <button type="submit" disabled={loading}>
+          Add
+        </button>
       </form>
     </div>
   );
