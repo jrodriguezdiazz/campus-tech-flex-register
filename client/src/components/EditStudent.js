@@ -1,15 +1,15 @@
-import React, {useEffect, useState} from 'react';
-import {useNavigate, useParams} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import useUpdateStudent from '../hooks/useUpdateStudent';
 import './EditStudent.css';
 import Loading from './Loading';
 
 function EditStudent() {
-  const {id} = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
 
   const [student, setStudent] = useState(null);
-  const {updateStudent, error, loading} = useUpdateStudent();
+  const { updateStudent, error, loading } = useUpdateStudent();
 
   useEffect(() => {
     async function fetchData() {
@@ -42,17 +42,14 @@ function EditStudent() {
       <form onSubmit={handleSubmit}>
         <div className="input-group">
           <label>Code:</label>
-          <input
-            disabled
-            value={student.code}
-          />
+          <input disabled value={student.code} />
         </div>
         <div className="input-group">
           <label>Name:</label>
           <input
             value={student.name}
             onChange={(e) =>
-              setStudent((prev) => ({...prev, name: e.target.value}))
+              setStudent((prev) => ({ ...prev, name: e.target.value }))
             }
           />
         </div>
@@ -61,7 +58,7 @@ function EditStudent() {
           <input
             value={student.last_name}
             onChange={(e) =>
-              setStudent((prev) => ({...prev, last_name: e.target.value}))
+              setStudent((prev) => ({ ...prev, last_name: e.target.value }))
             }
           />
         </div>
@@ -70,7 +67,7 @@ function EditStudent() {
           <input
             value={student.sex}
             onChange={(e) =>
-              setStudent((prev) => ({...prev, sex: e.target.value}))
+              setStudent((prev) => ({ ...prev, sex: e.target.value }))
             }
           />
         </div>
@@ -79,11 +76,13 @@ function EditStudent() {
           <input
             value={student.birthday}
             onChange={(e) =>
-              setStudent((prev) => ({...prev, birthday: e.target.value}))
+              setStudent((prev) => ({ ...prev, birthday: e.target.value }))
             }
           />
         </div>
-        <button type="submit" disabled={loading}>Save Changes</button>
+        <button type="submit" disabled={loading}>
+          Save Changes
+        </button>
       </form>
     </div>
   );

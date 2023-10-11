@@ -11,7 +11,9 @@ function StudentList() {
   const { deleteStudent } = useDeleteStudent();
 
   async function handleDelete(id) {
-    const confirmed = window.confirm('Are you sure you want to remove this student?');
+    const confirmed = window.confirm(
+      'Are you sure you want to remove this student?'
+    );
 
     if (confirmed) {
       await deleteStudent(id);
