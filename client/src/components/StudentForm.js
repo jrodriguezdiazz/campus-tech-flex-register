@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import usePostStudent from '../hooks/usePostStudent';
 import useUpdateStudent from '../hooks/useUpdateStudent';
+import { SEX_OPTIONS } from '../utils/constants';
 import validationSchema from '../validations/student';
 import Loading from './Loading';
 import './StudentForm.css';
@@ -94,7 +95,13 @@ function StudentForm() {
           </div>
           <div className="input-group">
             <label>Sex:</label>
-            <Field type="text" name="sex" />
+            <Field as="select" name="sex" className="dropdown">
+              {SEX_OPTIONS.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </Field>
             <ErrorMessage name="sex" component="div" className="error" />
           </div>
           <div className="input-group">
