@@ -45,7 +45,7 @@ function StudentForm() {
     name: student ? student.name : '',
     last_name: student ? student.last_name : '',
     sex: student ? student.sex : '',
-    birthday: student ? student.birthday : '',
+    birthday: student ? new Date(student.birthday).toJSON().slice(0, 10) : '',
   };
 
   const formik = useFormik({
@@ -106,7 +106,7 @@ function StudentForm() {
           </div>
           <div className="input-group">
             <label>Birthday:</label>
-            <Field type="text" name="birthday" />
+            <Field type="date" name="birthday" />
             <ErrorMessage name="birthday" component="div" className="error" />
           </div>
           <button type="submit" disabled={formik.isSubmitting}>
