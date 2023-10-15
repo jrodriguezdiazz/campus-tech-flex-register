@@ -45,6 +45,7 @@ services:
     restart: always
 
   postgres:
+    command: postgres -c config_file=/etc/postgresql.conf
     environment:
       - POSTGRES_USER=$POSTGRES_USER
       - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
@@ -54,6 +55,8 @@ services:
     ports:
       - $POSTGRES_PORT:$POSTGRES_PORT
     volumes:
+      - ./database/postgresql.conf:/etc/postgresql.conf
       - ./database/setup.sql:/docker-entrypoint-initdb.d/setup.sql
+      - /pgdata:/var/lib/postgresql/data
     env_file:
       - ./.env
